@@ -1,0 +1,564 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Josefin+Sans:wght@200;300;400;600&display=swap');
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide scrollbars globally */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+/* ─── Design Tokens ─── */
+:root {
+  --cream: #f5f0e8;
+  --warm-white: #faf7f2;
+  --ink: #1a1510;
+  --sepia: #8b6f47;
+  --sepia-light: #c4a882;
+  --sepia-pale: #e8ddd0;
+  --accent: #c2543a;
+  --gold: #d4a843;
+  --gold-dark: #8a6520;
+  --shadow-soft: 0 4px 24px rgba(26, 21, 16, 0.1);
+  --shadow-medium: 0 8px 32px rgba(26, 21, 16, 0.16);
+  --shadow-strong: 0 16px 48px rgba(26, 21, 16, 0.22);
+
+  /* Legacy aliases kept for child components */
+  --color-pink: #c2543a;
+  --color-pink-light: #d4724a;
+  --font-sans: 'Josefin Sans', sans-serif;
+  --radius-full: 2px;
+}
+
+/* ─── Body ─── */
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  height: -webkit-fill-available;
+}
+
+/* ─── App Container ─── */
+.app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--cream);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b6f47' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Ambient glow overlay */
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(194, 84, 58, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 88% 100%, rgba(139, 111, 71, 0.06) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Pages ─── */
+.page {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  width: 100dvw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: all 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  padding:
+    max(env(safe-area-inset-top), 8px) max(env(safe-area-inset-right), 12px) max(env(safe-area-inset-bottom), 8px) max(env(safe-area-inset-left), 12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 0;
+  z-index: 1;
+}
+
+.page.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  position: relative;
+}
+
+.page.exit-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* ─── Page 1: Countdown — tight spacing so everything fits ─── */
+.page--countdown {
+  justify-content: space-evenly;
+}
+
+.page--countdown .hero {
+  padding: 4px 12px 2px;
+  flex-shrink: 0;
+}
+
+.page--countdown .hero h1 {
+  margin-bottom: 2px;
+  font-size: clamp(1.35rem, 4vw, 2.4rem);
+}
+
+.page--countdown .hero p {
+  font-size: clamp(0.85rem, 2vw, 1rem);
+}
+
+.page--countdown .countdown {
+  padding: 4px 12px 6px;
+  flex-shrink: 0;
+}
+
+.page--countdown .teaser {
+  padding: 4px 12px 6px;
+  flex-shrink: 0;
+}
+
+.page--countdown #teaserHeading {
+  margin: 0 0 2px;
+  font-size: clamp(1rem, 2.8vw, 1.25rem);
+}
+
+.page--countdown .teaser-hint {
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  margin: 0;
+}
+
+.page--countdown .celebrate-btn,
+.page--countdown #surpriseBtn {
+  margin: 6px auto 8px;
+  flex-shrink: 0;
+}
+
+.page--countdown .card {
+  width: clamp(52px, 15vw, 72px);
+  height: clamp(60px, 17vw, 82px);
+}
+
+.page--countdown .card .text {
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+}
+
+/* ─── Hero Section ─── */
+.hero {
+  padding: clamp(12px, 3vw, 24px) clamp(16px, 4vw, 32px);
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sepia-light), transparent);
+  margin: 20px auto 0;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+  color: var(--ink);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  margin-bottom: clamp(8px, 2vw, 14px);
+}
+
+.hero p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 200;
+  font-size: clamp(0.75rem, 1.8vw, 0.88rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin: 0;
+}
+
+.highlight {
+  color: var(--accent);
+  font-style: italic;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+/* ─── Teaser Section ─── */
+.teaser {
+  padding: clamp(12px, 3vw, 20px) clamp(16px, 4vw, 28px);
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+#teaserHeading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  /* Remove old gradient clip */
+  background: none;
+  -webkit-text-fill-color: unset;
+}
+
+.teaser-hint {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 200;
+  font-size: clamp(0.72rem, 1.6vw, 0.8rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sepia-light);
+  margin: 0;
+  font-style: normal;
+}
+
+/* ─── Celebrate / Surprise Button ─── */
+#surpriseBtn,
+.celebrate-btn {
+  position: relative;
+  z-index: 1;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: clamp(0.78rem, 2vw, 0.88rem);
+  color: var(--warm-white);
+  background: linear-gradient(135deg, var(--accent) 0%, #a03828 100%);
+  border: none;
+  padding: clamp(12px, 2.5vw, 16px) clamp(28px, 5vw, 48px);
+  border-radius: 1px;
+  cursor: pointer;
+  margin: clamp(8px, 2vw, 16px) auto;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+  box-shadow: 0 6px 24px rgba(194, 84, 58, 0.28);
+}
+
+/* Ripple */
+.celebrate-btn::before,
+#surpriseBtn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.celebrate-btn:hover:not(:disabled)::before,
+#surpriseBtn:hover:not(:disabled)::before {
+  width: 300px;
+  height: 300px;
+}
+
+#surpriseBtn:hover:not(:disabled),
+.celebrate-btn:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(194, 84, 58, 0.4);
+}
+
+#surpriseBtn:not(:disabled),
+.celebrate-btn:not(:disabled) {
+  animation: pulse-btn 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-btn {
+
+  0%,
+  100% {
+    box-shadow: 0 6px 24px rgba(194, 84, 58, 0.28);
+  }
+
+  50% {
+    box-shadow: 0 12px 36px rgba(194, 84, 58, 0.46);
+  }
+}
+
+#surpriseBtn:disabled,
+.celebrate-btn:disabled {
+  background: linear-gradient(135deg, var(--sepia-pale), #d4c9b8);
+  color: var(--sepia-light);
+  cursor: not-allowed;
+  box-shadow: none;
+  animation: none;
+  opacity: 0.85;
+}
+
+/* ─── Page 3 & 4: Message / Gallery ─── */
+.page--message,
+.page--gallery {
+  justify-content: flex-start;
+}
+
+.page--message .page-nav-btn,
+.page--gallery .back-btn {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.page--message .back-btn {
+  margin-bottom: 4px;
+}
+
+.page--gallery .final {
+  padding: clamp(12px, 2.5vw, 24px) clamp(12px, 3vw, 20px);
+  margin: clamp(8px, 2vw, 20px) auto clamp(8px, 2vw, 16px);
+}
+
+.page--gallery .final-message {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.page--gallery .gallery {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+/* ─── Back Button ─── */
+.back-btn {
+  position: fixed;
+  top: max(56px, env(safe-area-inset-top));
+  left: clamp(12px, 3vw, 20px);
+  z-index: 100;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  background: rgba(250, 247, 242, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 111, 71, 0.22);
+  padding: clamp(10px, 2vw, 12px) clamp(18px, 4vw, 24px);
+  border-radius: 1px;
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.back-btn:hover {
+  background: var(--ink);
+  color: var(--warm-white);
+  border-color: var(--ink);
+  transform: translateX(-3px);
+}
+
+/* ─── Page Nav Button ─── */
+.page-nav-btn {
+  position: relative;
+  overflow: hidden;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: clamp(0.78rem, 2vw, 0.88rem);
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid rgba(139, 111, 71, 0.35);
+  padding: clamp(10px, 2vw, 14px) clamp(24px, 4vw, 40px);
+  border-radius: 1px;
+  cursor: pointer;
+  margin-top: clamp(8px, 2vw, 16px);
+  margin-bottom: 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.page-nav-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sepia);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+  z-index: -1;
+}
+
+.page-nav-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.page-nav-btn:hover {
+  color: var(--warm-white);
+  border-color: var(--sepia);
+}
+
+/* ─── Final Section ─── */
+.final {
+  text-align: center;
+  padding: clamp(12px, 3vw, 24px);
+  max-width: 700px;
+  margin: clamp(8px, 2vw, 20px) auto clamp(8px, 2vw, 16px);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.final::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sepia-light), transparent);
+  margin: 0 auto 20px;
+}
+
+.final-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  margin: 4px 0;
+  /* Remove old gradient clip */
+  background: none;
+  -webkit-text-fill-color: unset;
+}
+
+.final-subtitle {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 200;
+  font-size: clamp(0.7rem, 1.6vw, 0.78rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--sepia-light);
+  margin: 0;
+  font-style: normal;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 480px) {
+  .page {
+    padding: 12px;
+    padding-top: max(env(safe-area-inset-top), 14px);
+    padding-bottom: max(env(safe-area-inset-bottom), 14px);
+  }
+
+  .back-btn {
+    top: max(env(safe-area-inset-top), 64px);
+    left: 12px;
+    padding: 10px 16px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .page {
+    padding: 20px;
+  }
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 44px;
+  }
+
+  .back-btn,
+  .page-nav-btn,
+  #surpriseBtn,
+  .celebrate-btn {
+    padding: 14px 28px;
+  }
+}
+
+/* iOS Safari */
+@supports (-webkit-touch-callout: none) {
+
+  .app,
+  .page {
+    height: -webkit-fill-available;
+  }
+
+  body {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width: 932px) and (orientation: landscape) {
+  .page {
+    padding: 12px;
+    justify-content: flex-start;
+    padding-top: max(env(safe-area-inset-top), 16px);
+  }
+
+  .hero {
+    padding: 10px 16px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  }
+}

@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Josefin+Sans:wght@200;300;400&display=swap');
+
+/* ─── Root Variables (mirrors Gallery palette) ─── */
+:root {
+  --cream: #f5f0e8;
+  --warm-white: #faf7f2;
+  --ink: #1a1510;
+  --sepia: #8b6f47;
+  --sepia-light: #c4a882;
+  --sepia-pale: #e8ddd0;
+  --accent: #c2543a;
+  --curtain-red: #8b1a1a;
+  --curtain-deep: #5c0f0f;
+  --curtain-sheen: #b83030;
+  --shadow-soft: 0 4px 24px rgba(26, 21, 16, 0.12);
+  --shadow-hover: 0 12px 48px rgba(26, 21, 16, 0.22);
+  --shadow-deep: 0 24px 80px rgba(26, 21, 16, 0.35);
+}
+
+/* ─── Section ─── */
+.message {
+  width: 100%;
+  min-height: fit-content;
+  flex: 1 0 auto;
+  background-color: var(--cream);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b6f47' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  padding: 80px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.message::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(139, 26, 26, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 90%, rgba(139, 111, 71, 0.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ─── Heading ─── */
+.message h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--ink);
+  text-align: center;
+  margin: 0 0 56px;
+  letter-spacing: 0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.message h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sepia), transparent);
+  margin: 18px auto 0;
+}
+
+/* ─── Curtain Container ─── */
+.curtain-container {
+  position: relative;
+  width: min(680px, 90vw);
+  min-height: 420px;
+  perspective: 1200px;
+}
+
+/* ─── Curtain Rod ─── */
+.curtain-rod {
+  position: absolute;
+  top: -14px;
+  left: -28px;
+  right: -28px;
+  height: 14px;
+  background: linear-gradient(180deg,
+      #d4a843 0%,
+      #b8892e 35%,
+      #8a6520 70%,
+      #c49a35 100%);
+  border-radius: 7px;
+  z-index: 20;
+  box-shadow:
+    0 3px 12px rgba(26, 21, 16, 0.3),
+    inset 0 2px 4px rgba(255, 220, 100, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Rod end caps */
+.curtain-rod::before,
+.curtain-rod::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f0c84a, #8a6520);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.curtain-rod::before {
+  left: -10px;
+}
+
+.curtain-rod::after {
+  right: -10px;
+}
+
+/* ─── Curtain Wrapper ─── */
+.curtain-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.curtain-wrapper.opened {
+  pointer-events: none;
+}
+
+.curtain-wrapper:not(.opened):hover .curtain-hint {
+  transform: translateX(-50%) scale(1.06);
+}
+
+/* ─── Individual Curtains ─── */
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 51%;
+  /* slight overlap at center */
+  z-index: 10;
+  transform-style: preserve-3d;
+  transform-origin: top center;
+}
+
+/* Velvet fabric texture via repeating gradients */
+.curtain-left {
+  left: 0;
+  background:
+    repeating-linear-gradient(180deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.03) 2px,
+      transparent 4px),
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.04) 6px,
+      transparent 9px),
+    linear-gradient(170deg,
+      var(--curtain-sheen) 0%,
+      var(--curtain-red) 25%,
+      var(--curtain-deep) 55%,
+      var(--curtain-red) 80%,
+      var(--curtain-sheen) 100%);
+  border-right: 2px solid rgba(0, 0, 0, 0.25);
+  box-shadow:
+    inset -8px 0 24px rgba(0, 0, 0, 0.2),
+    inset 4px 0 12px rgba(255, 255, 255, 0.06),
+    4px 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.curtain-right {
+  right: 0;
+  background:
+    repeating-linear-gradient(180deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.03) 2px,
+      transparent 4px),
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      transparent 3px,
+      rgba(0, 0, 0, 0.04) 6px,
+      transparent 9px),
+    linear-gradient(-170deg,
+      var(--curtain-sheen) 0%,
+      var(--curtain-red) 25%,
+      var(--curtain-deep) 55%,
+      var(--curtain-red) 80%,
+      var(--curtain-sheen) 100%);
+  border-left: 2px solid rgba(0, 0, 0, 0.25);
+  box-shadow:
+    inset 8px 0 24px rgba(0, 0, 0, 0.2),
+    inset -4px 0 12px rgba(255, 255, 255, 0.06),
+    -4px 0 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Curtain fold lines */
+.curtain-left::before,
+.curtain-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: repeating-linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 8%,
+      transparent 16%,
+      rgba(255, 255, 255, 0.03) 24%,
+      transparent 32%);
+}
+
+/* Gold fringe at bottom */
+.curtain-left::after,
+.curtain-right::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: repeating-linear-gradient(90deg,
+      #c49a35 0px, #c49a35 3px,
+      transparent 3px, transparent 7px);
+  opacity: 0.7;
+}
+
+/* ─── Click Hint ─── */
+.curtain-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 15;
+  color: rgba(250, 247, 242, 0.92);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease;
+  padding: 12px 24px;
+  border: 1px solid rgba(250, 247, 242, 0.2);
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(4px);
+  border-radius: 1px;
+  animation: hint-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 24px rgba(196, 168, 130, 0.2);
+  }
+}
+
+/* ─── Message Content (behind curtains) ─── */
+.message-content {
+  position: relative;
+  z-index: 1;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 52px;
+
+  background: var(--warm-white);
+  border: 1px solid rgba(139, 111, 71, 0.15);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 0 80px rgba(245, 240, 232, 0.6);
+
+  /* Start hidden for GSAP */
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* Paper texture lines */
+.message-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg,
+      transparent 0,
+      transparent 31px,
+      rgba(139, 111, 71, 0.06) 31px,
+      rgba(139, 111, 71, 0.06) 32px);
+  pointer-events: none;
+}
+
+/* Left margin line */
+.message-content::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 48px;
+  width: 1px;
+  background: rgba(194, 84, 58, 0.2);
+}
+
+/* ─── Typed Text / Letter ─── */
+.typed-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 2;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding-left: 16px;
+  text-align: left;
+  max-width: 520px;
+}
+
+/* Signature emphasis */
+.typed-text::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--sepia-light);
+  margin-top: 24px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 800px) {
+  .message {
+    padding: 60px 20px 80px;
+  }
+
+  .message-content {
+    padding: 36px 32px;
+    min-height: 360px;
+  }
+
+  .message-content::after {
+    left: 36px;
+  }
+
+  .curtain-container {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-content {
+    padding: 28px 24px;
+  }
+
+  .message-content::after {
+    left: 24px;
+  }
+
+  .typed-text {
+    font-size: 1rem;
+    line-height: 1.9;
+    padding-left: 8px;
+  }
+}
