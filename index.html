@@ -1,45 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Countdown</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f0f8ff; color: #333; padding: 50px; }
-    h1 { font-size: 3em; }
-    #countdown { font-size: 2em; margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <h1>Happy Birthday Vritti!</h1>
-  <div id="countdown"></div>
-
-  <script>
-    const birthday = new Date();
-    birthday.setMonth(2); // March (0 = Jan)
-    birthday.setDate(10); // change to your birthday date
-    birthday.setHours(1); // 1 AM
-    birthday.setMinutes(0);
-    birthday.setSeconds(0);
-
-    const countdownEl = document.getElementById("countdown");
-
-    function updateCountdown() {
-      const now = new Date();
-      const diff = birthday - now;
-      if (diff <= 0) {
-        countdownEl.textContent = "🎉 It's Birthday Time! 🎉";
-        clearInterval(interval);
-        return;
-      }
-      const hours = Math.floor(diff / 1000 / 60 / 60);
-      const minutes = Math.floor((diff / 1000 / 60) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>Happy Birthday Vritti 🎂</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
