@@ -19,7 +19,7 @@ function Countdown({ onBirthdayReached, birthdayReached }) {
     // 🎂 SET YOUR BIRTHDAY DATE & TIME HERE 🎂
     // ═══════════════════════════════════════════════════════════════
 
-    const targetDate = new Date("2026-03-12T00:00:00");
+    const targetDate = new Date("2026-03-12T01:00:00");
 
     // 📝 HOW TO USE:
     // Replace the date above with your actual birthday
@@ -99,15 +99,7 @@ function Countdown({ onBirthdayReached, birthdayReached }) {
         />
       </div>
 
-      {/* ⚠️ TEST BUTTON - delete it from here⚠️ */}
-      <button
-        className="test-button"
-        onClick={onBirthdayReached}
-        title="Skip countdown and see celebration"
-      >
-        🎉 Test Celebration
-      </button>
-      {/* ⚠️ END TEST BUTTON - DELETE UP TO HERE ⚠️ */}
+      
     </section>
   );
 }
